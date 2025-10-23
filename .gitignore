@@ -166,3 +166,5 @@ dmypy.json
 /content/images/projects/*.webp
 # Keep the directory but ignore uploaded images
 !/content/images/projects/.gitkeep.kiro/specs/portfolio-website
+
+.kiro/specs/portfolio-website/
