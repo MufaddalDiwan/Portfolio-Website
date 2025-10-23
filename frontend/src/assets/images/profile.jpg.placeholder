@@ -1,0 +1,21 @@
+# Profile Image Placeholder
+
+This file represents where the profile image should be placed.
+
+**File:** profile.jpg
+**Dimensions:** 400x400 pixels (recommended)
+**Format:** JPG or PNG
+**Description:** Professional headshot used in structured data and potentially in the sidebar
+
+**Content suggestions:**
+- Professional headshot
+- Clean background (solid color or subtle pattern)
+- Good lighting and high quality
+- Friendly and approachable expression
+
+**Technical requirements:**
+- File size: Under 500KB
+- Square aspect ratio (1:1)
+- Minimum: 200x200 pixels
+- High resolution for retina displays
+- Optimized for web (compressed but high quality)

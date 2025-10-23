@@ -1,0 +1,20 @@
+# OpenGraph Image Placeholder
+
+This file represents where the OpenGraph image should be placed.
+
+**File:** og-image.jpg
+**Dimensions:** 1200x630 pixels (recommended)
+**Format:** JPG or PNG
+**Description:** Image used when the portfolio is shared on social media platforms like Facebook, LinkedIn, etc.
+
+**Content suggestions:**
+- Portfolio screenshot or mockup
+- Professional headshot with portfolio branding
+- Clean design with name and title text overlay
+- High contrast and readable text
+
+**Technical requirements:**
+- File size: Under 1MB
+- Aspect ratio: 1.91:1 (1200x630)
+- Text should be readable at small sizes
+- Avoid fine details that won't be visible in thumbnails

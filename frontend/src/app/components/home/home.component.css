@@ -1,0 +1,58 @@
+.home-layout {
+  display: flex;
+  min-height: 100vh;
+  background: var(--bg-primary);
+}
+
+.main-content {
+  flex: 1;
+  overflow-y: auto;
+  scroll-behavior: smooth;
+}
+
+/* Reduced Motion Support */
+@media (prefers-reduced-motion: reduce) {
+  .main-content {
+    scroll-behavior: auto;
+  }
+}
+
+/* Reduced motion class overrides */
+.main-content.reduced-motion {
+  scroll-behavior: auto !important;
+}
+
+.content-section {
+  min-height: 100vh;
+  padding: 2rem 0;
+  margin-bottom: 2rem;
+}
+
+
+
+.content-section p {
+  color: var(--text-secondary);
+  line-height: 1.6;
+  margin-bottom: 1rem;
+  max-width: 65ch;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .home-layout {
+    flex-direction: column;
+  }
+  
+  .main-content {
+    padding: 0;
+  }
+  
+  .content-section {
+    min-height: 80vh;
+    padding: 1rem 0;
+  }
+  
+  .content-section h2 {
+    font-size: 1.5rem;
+  }
+}

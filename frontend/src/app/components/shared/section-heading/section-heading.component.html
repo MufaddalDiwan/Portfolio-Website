@@ -1,0 +1,11 @@
+<h2 
+  #headingElement
+  [id]="getHeadingId()"
+  class="section-heading"
+  [class]="className"
+  [class.visible]="isVisible"
+  [class.reduced-motion]="prefersReducedMotion"
+  [attr.aria-label]="'Section ' + number + ': ' + title">
+  <span class="section-number" aria-hidden="true">{{ number }}.</span>
+  <span class="section-title">{{ title }}</span>
+</h2>

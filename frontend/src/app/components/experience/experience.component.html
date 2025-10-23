@@ -1,0 +1,104 @@
+<section class="experience-timeline" [class.reduced-motion]="prefersReducedMotion">
+  <!-- Loading State -->
+  <div *ngIf="loading" class="loading-state" role="status" aria-label="Loading experience data">
+    <div class="loading-spinner"></div>
+    <p>Loading experience...</p>
+  </div>
+
+  <!-- Error State -->
+  <div *ngIf="error && !loading" class="error-state" role="alert">
+    <p class="error-message">{{ error }}</p>
+    <button 
+      type="button" 
+      class="retry-button"
+      (click)="retry()"
+      aria-label="Retry loading experience data">
+      Try Again
+    </button>
+  </div>
+
+  <!-- Experience Timeline -->
+  <div *ngIf="!loading && !error" class="timeline-container">
+    <div 
+      *ngFor="let experience of experiences$ | async; trackBy: trackByExperienceId" 
+      class="timeline-item"
+      [attr.data-experience-id]="experience.id">
+      
+      <!-- Timeline Connector -->
+      <div class="timeline-connector">
+        <div class="timeline-dot"></div>
+        <div class="timeline-line"></div>
+      </div>
+
+      <!-- Experience Card -->
+      <div class="experience-card">
+        <!-- Header -->
+        <div class="experience-header">
+          <div class="experience-main-info">
+            <h3 class="experience-role">{{ experience.role }}</h3>
+            <h4 class="experience-company">{{ experience.company }}</h4>
+            <p class="experience-location" *ngIf="experience.location">
+              {{ experience.location }}
+            </p>
+          </div>
+          
+          <div class="experience-dates">
+            <p class="date-range">{{ formatDateRange(experience.startDate, experience.endDate) }}</p>
+            <p class="duration">{{ calculateDuration(experience.startDate, experience.endDate) }}</p>
+          </div>
+        </div>
+
+        <!-- Technology Tags -->
+        <div class="tech-tags" *ngIf="experience.tech && experience.tech.length > 0">
+          <app-tech-tag
+            *ngFor="let tech of experience.tech" 
+            [tech]="tech"
+            variant="default">
+          </app-tech-tag>
+        </div>
+
+        <!-- Expandable Details -->
+        <div class="experience-details" *ngIf="experience.bullets && experience.bullets.length > 0">
+          <!-- Toggle Button -->
+          <button 
+            type="button"
+            class="expand-toggle"
+            (click)="toggleExpanded(experience.id)"
+            [attr.aria-expanded]="isExpanded(experience.id)"
+            [attr.aria-controls]="'details-' + experience.id"
+            [attr.aria-label]="isExpanded(experience.id) ? 'Collapse details' : 'Expand details'">
+            <span class="toggle-text">
+              {{ isExpanded(experience.id) ? 'Show Less' : 'Show More' }}
+            </span>
+            <svg 
+              class="toggle-icon"
+              [class.rotated]="isExpanded(experience.id)"
+              width="16" 
+              height="16" 
+              viewBox="0 0 16 16" 
+              fill="currentColor"
+              aria-hidden="true">
+              <path d="M4.427 9.573L8 6l3.573 3.573a.5.5 0 0 0 .708-.708L8.354 4.939a.5.5 0 0 0-.708 0L3.72 8.865a.5.5 0 1 0 .708.708z"/>
+            </svg>
+          </button>
+
+          <!-- Collapsible Content -->
+          <div 
+            class="details-content"
+            [id]="'details-' + experience.id"
+            [class.expanded]="isExpanded(experience.id)"
+            [attr.aria-hidden]="!isExpanded(experience.id)">
+            <ul class="bullet-points" role="list">
+              <li 
+                *ngFor="let bullet of experience.bullets" 
+                class="bullet-point"
+                role="listitem">
+                {{ bullet }}
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

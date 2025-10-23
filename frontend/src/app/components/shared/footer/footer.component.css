@@ -1,0 +1,246 @@
+.footer {
+  background: var(--bg-secondary);
+  border-top: 1px solid var(--border-color);
+  padding: var(--spacing-2xl) 0 var(--spacing-xl);
+  margin-top: var(--spacing-3xl);
+}
+
+.footer-content {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 var(--spacing-lg);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--spacing-lg);
+  text-align: center;
+}
+
+/* Social Links */
+.footer-social {
+  order: 1;
+}
+
+.social-links {
+  display: flex;
+  gap: var(--spacing-md);
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.social-link {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  background: transparent;
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  text-decoration: none;
+}
+
+.social-link:hover {
+  background: var(--accent-primary);
+  border-color: var(--accent-primary);
+  color: var(--bg-primary);
+  transform: translateY(-2px);
+}
+
+.social-link:focus {
+  outline: 2px solid var(--accent-primary);
+  outline-offset: 2px;
+}
+
+/* Footer Text */
+.footer-text {
+  order: 2;
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-sm);
+}
+
+.copyright {
+  color: var(--text-secondary);
+  font-size: var(--font-size-sm);
+  margin: 0;
+}
+
+.attribution {
+  color: var(--text-tertiary);
+  font-size: var(--font-size-xs);
+  margin: 0;
+}
+
+.tech-stack {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--spacing-xs);
+}
+
+.tech-link {
+  color: var(--accent-primary);
+  text-decoration: none;
+  font-weight: 500;
+  transition: color var(--transition-fast);
+}
+
+.tech-link:hover {
+  color: var(--accent-primary-hover);
+  text-decoration: underline;
+}
+
+.tech-link:focus {
+  outline: 2px solid var(--accent-primary);
+  outline-offset: 2px;
+  border-radius: var(--radius-sm);
+}
+
+.separator {
+  color: var(--text-tertiary);
+  font-weight: 300;
+}
+
+/* Back to Top Button */
+.footer-actions {
+  order: 3;
+}
+
+.back-to-top {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  background: var(--bg-primary);
+  border: 1px solid var(--border-color);
+  border-radius: 50%;
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.back-to-top:hover {
+  background: var(--accent-primary);
+  border-color: var(--accent-primary);
+  color: var(--bg-primary);
+  transform: translateY(-2px);
+}
+
+.back-to-top:focus {
+  outline: 2px solid var(--accent-primary);
+  outline-offset: 2px;
+}
+
+/* Responsive Design */
+@media (min-width: 768px) {
+  .footer-content {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    text-align: left;
+  }
+
+  .footer-social {
+    order: 1;
+  }
+
+  .footer-text {
+    order: 2;
+    flex: 1;
+    text-align: center;
+  }
+
+  .footer-actions {
+    order: 3;
+  }
+}
+
+@media (max-width: 480px) {
+  .footer {
+    padding: var(--spacing-xl) 0 var(--spacing-lg);
+  }
+
+  .footer-content {
+    padding: 0 var(--spacing-md);
+    gap: var(--spacing-md);
+  }
+
+  .social-links {
+    gap: var(--spacing-sm);
+  }
+
+  .social-link {
+    width: 40px;
+    height: 40px;
+  }
+
+  .tech-stack {
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .separator {
+    display: none;
+  }
+}
+
+/* Reduced Motion */
+@media (prefers-reduced-motion: reduce) {
+  .social-link,
+  .back-to-top,
+  .tech-link {
+    transition: none;
+  }
+
+  .social-link:hover,
+  .back-to-top:hover {
+    transform: none;
+  }
+}
+
+/* High Contrast Mode */
+@media (prefers-contrast: high) {
+  .footer {
+    border-top-width: 2px;
+  }
+
+  .social-link,
+  .back-to-top {
+    border-width: 2px;
+  }
+
+  .social-link:hover,
+  .social-link:focus,
+  .back-to-top:hover,
+  .back-to-top:focus {
+    border-width: 3px;
+  }
+}
+
+/* Print Styles */
+@media print {
+  .footer {
+    background: transparent !important;
+    border-top: 1px solid #000 !important;
+    page-break-inside: avoid;
+  }
+
+  .footer-social,
+  .footer-actions {
+    display: none !important;
+  }
+
+  .footer-text {
+    color: #000 !important;
+  }
+
+  .tech-link {
+    color: #000 !important;
+    text-decoration: underline !important;
+  }
+}

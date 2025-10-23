@@ -1,0 +1,154 @@
+<div class="contact-container" [class.reduced-motion]="prefersReducedMotion">
+  <div class="contact-header">
+    <app-section-heading number="04" title="Get In Touch"></app-section-heading>
+    <p class="contact-description">
+      I'm always interested in new opportunities and collaborations. 
+      Whether you have a project in mind or just want to say hello, 
+      I'd love to hear from you!
+    </p>
+  </div>
+
+  <form 
+    [formGroup]="contactForm" 
+    (ngSubmit)="onSubmit()" 
+    class="contact-form" 
+    novalidate
+    aria-labelledby="get-in-touch-heading"
+    role="form">
+    <!-- Success Message -->
+    <div 
+      *ngIf="submitSuccess" 
+      class="message success-message" 
+      role="alert" 
+      aria-live="polite"
+    >
+      <div class="message-content">
+        <svg class="message-icon" fill="currentColor" viewBox="0 0 20 20">
+          <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
+        </svg>
+        <span>Thank you for your message! I'll get back to you soon.</span>
+      </div>
+    </div>
+
+    <!-- Error Message -->
+    <div 
+      *ngIf="submitError" 
+      class="message error-message" 
+      role="alert" 
+      aria-live="polite"
+    >
+      <div class="message-content">
+        <svg class="message-icon" fill="currentColor" viewBox="0 0 20 20">
+          <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clip-rule="evenodd"></path>
+        </svg>
+        <span>{{ submitError }}</span>
+      </div>
+    </div>
+
+    <!-- Name Field -->
+    <div class="form-group">
+      <label for="name" class="form-label">
+        Name <span class="required-asterisk">*</span>
+      </label>
+      <input
+        type="text"
+        id="name"
+        formControlName="name"
+        class="form-input"
+        [class.error]="name?.invalid && (name?.dirty || name?.touched)"
+        [attr.aria-invalid]="name?.invalid && (name?.dirty || name?.touched)"
+        [attr.aria-describedby]="getFieldError('name') ? 'name-error' : null"
+        placeholder="Your full name"
+        (input)="clearMessages()"
+        autocomplete="name"
+        required
+      />
+      <div 
+        *ngIf="getFieldError('name')" 
+        id="name-error"
+        class="field-error" 
+        role="alert"
+        aria-live="polite"
+      >
+        {{ getFieldError('name') }}
+      </div>
+    </div>
+
+    <!-- Email Field -->
+    <div class="form-group">
+      <label for="email" class="form-label">
+        Email <span class="required-asterisk">*</span>
+      </label>
+      <input
+        type="email"
+        id="email"
+        formControlName="email"
+        class="form-input"
+        [class.error]="email?.invalid && (email?.dirty || email?.touched)"
+        [attr.aria-invalid]="email?.invalid && (email?.dirty || email?.touched)"
+        [attr.aria-describedby]="getFieldError('email') ? 'email-error' : null"
+        placeholder="your.email@example.com"
+        (input)="clearMessages()"
+        autocomplete="email"
+        required
+      />
+      <div 
+        *ngIf="getFieldError('email')" 
+        id="email-error"
+        class="field-error" 
+        role="alert"
+        aria-live="polite"
+      >
+        {{ getFieldError('email') }}
+      </div>
+    </div>
+
+    <!-- Message Field -->
+    <div class="form-group">
+      <label for="message" class="form-label">
+        Message <span class="required-asterisk">*</span>
+      </label>
+      <textarea
+        id="message"
+        formControlName="message"
+        class="form-textarea"
+        [class.error]="message?.invalid && (message?.dirty || message?.touched)"
+        [attr.aria-invalid]="message?.invalid && (message?.dirty || message?.touched)"
+        [attr.aria-describedby]="getFieldError('message') ? 'message-error' : null"
+        placeholder="Tell me about your project or just say hello..."
+        rows="6"
+        (input)="clearMessages()"
+        required
+      ></textarea>
+      <div 
+        *ngIf="getFieldError('message')" 
+        id="message-error"
+        class="field-error" 
+        role="alert"
+        aria-live="polite"
+      >
+        {{ getFieldError('message') }}
+      </div>
+    </div>
+
+    <!-- Submit Button -->
+    <div class="form-actions">
+      <button
+        type="submit"
+        class="submit-button"
+        [disabled]="contactForm.invalid || isSubmitting"
+        [class.loading]="isSubmitting"
+        [attr.aria-describedby]="isSubmitting ? 'submit-status' : null"
+      >
+        <span *ngIf="!isSubmitting">Send Message</span>
+        <span *ngIf="isSubmitting" class="loading-content">
+          <svg class="loading-spinner" viewBox="0 0 24 24" aria-hidden="true">
+            <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4" fill="none" opacity="0.25"></circle>
+            <path fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" opacity="0.75"></path>
+          </svg>
+          <span id="submit-status">Sending...</span>
+        </span>
+      </button>
+    </div>
+  </form>
+</div>

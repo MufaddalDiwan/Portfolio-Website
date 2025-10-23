@@ -1,0 +1,119 @@
+.tech-tag {
+  display: inline-flex;
+  align-items: center;
+  padding: var(--spacing-xs) var(--spacing-sm);
+  background: var(--color-bg-tertiary);
+  color: var(--text-secondary);
+  font-size: var(--font-size-xs);
+  font-family: 'JetBrains Mono', 'Fira Code', monospace;
+  font-weight: 400;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border-color);
+  transition: all var(--transition-fast);
+  white-space: nowrap;
+  line-height: 1.2;
+}
+
+/* Hover effects for all tags */
+.tech-tag:hover {
+  background: var(--accent-primary);
+  color: var(--bg-primary);
+  border-color: var(--accent-primary);
+}
+
+/* Clickable variant */
+.tech-tag--clickable {
+  cursor: pointer;
+  user-select: none;
+}
+
+.tech-tag--clickable:focus {
+  outline: 2px solid var(--accent-primary);
+  outline-offset: 2px;
+}
+
+.tech-tag--clickable:active {
+  transform: scale(0.95);
+}
+
+/* Featured variant (for featured projects) */
+.tech-tag--featured {
+  background: var(--accent-primary-subtle);
+  border-color: var(--accent-primary);
+  color: var(--accent-primary);
+}
+
+.tech-tag--featured:hover {
+  background: var(--accent-primary);
+  color: var(--bg-primary);
+}
+
+/* Large variant (for skills section, etc.) */
+.tech-tag--large {
+  padding: var(--spacing-sm) var(--spacing-md);
+  font-size: var(--font-size-sm);
+  border-radius: var(--radius-md);
+}
+
+/* Dark theme adjustments */
+.dark .tech-tag {
+  background: var(--color-bg-tertiary);
+  border-color: var(--border-color);
+}
+
+.dark .tech-tag:hover {
+  background: var(--accent-primary);
+  color: var(--color-bg-primary);
+}
+
+.dark .tech-tag--featured {
+  background: var(--accent-primary-subtle);
+  border-color: var(--accent-primary);
+  color: var(--accent-primary);
+}
+
+/* Responsive Design */
+@media (max-width: 480px) {
+  .tech-tag {
+    padding: 4px var(--spacing-xs);
+    font-size: 10px;
+  }
+
+  .tech-tag--large {
+    padding: var(--spacing-xs) var(--spacing-sm);
+    font-size: var(--font-size-xs);
+  }
+}
+
+/* Reduced Motion */
+@media (prefers-reduced-motion: reduce) {
+  .tech-tag {
+    transition: none;
+  }
+
+  .tech-tag--clickable:active {
+    transform: none;
+  }
+}
+
+/* High Contrast Mode */
+@media (prefers-contrast: high) {
+  .tech-tag {
+    border-width: 2px;
+    font-weight: 600;
+  }
+
+  .tech-tag:hover,
+  .tech-tag:focus {
+    border-width: 3px;
+  }
+}
+
+/* Print Styles */
+@media print {
+  .tech-tag {
+    background: transparent !important;
+    color: var(--text-primary) !important;
+    border: 1px solid var(--text-primary) !important;
+  }
+}

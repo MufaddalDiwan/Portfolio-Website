@@ -1,0 +1,83 @@
+<section 
+  #aboutSection
+  id="about" 
+  class="about-section"
+  [class.visible]="isVisible"
+  [class.reduced-motion]="prefersReducedMotion"
+  role="main"
+  aria-labelledby="about-heading">
+  
+  <div class="about-container">
+    <!-- Section Heading -->
+    <div class="section-header">
+      <span class="section-number" aria-hidden="true">01.</span>
+      <h2 id="about-heading" class="section-title">About Me</h2>
+      <div class="section-line" aria-hidden="true"></div>
+    </div>
+
+    <!-- Loading State -->
+    <div *ngIf="isLoading" class="about-loading" aria-live="polite">
+      <div class="loading-spinner" [class.reduced-motion]="prefersReducedMotion"></div>
+      <span class="sr-only">Loading about content...</span>
+    </div>
+
+    <!-- Error State -->
+    <div *ngIf="error && !isLoading" class="about-error" role="alert">
+      <p class="error-message">{{ error }}</p>
+      <button 
+        type="button" 
+        class="retry-button"
+        (click)="retryLoad()"
+        aria-label="Retry loading content">
+        Try Again
+      </button>
+    </div>
+
+    <!-- About Content -->
+    <div *ngIf="siteMeta && !isLoading && !error" class="about-content" [class.reduced-motion]="prefersReducedMotion">
+      <div class="about-grid">
+        <!-- Bio Text -->
+        <div class="about-text">
+          <div 
+            class="bio-content"
+            [innerHTML]="renderedBio"
+            [attr.aria-label]="'About me biography'">
+          </div>
+        </div>
+
+        <!-- Profile Image -->
+        <div class="about-image">
+          <div class="image-container">
+            <img
+              *ngIf="!profileImageError"
+              [ngSrc]="profileImage.src"
+              alt="Profile photo"
+              width="300"
+              height="300"
+              class="profile-image"
+              loading="lazy"
+              placeholder="blur"
+              [sizes]="profileImage.sizes"
+              (error)="onImageError($event)" />
+            <div 
+              *ngIf="profileImageError"
+              class="profile-placeholder">
+              <svg 
+                width="120" 
+                height="120" 
+                viewBox="0 0 120 120" 
+                fill="none" 
+                xmlns="http://www.w3.org/2000/svg"
+                aria-hidden="true">
+                <circle cx="60" cy="35" r="20" fill="currentColor" opacity="0.3"/>
+                <path d="M20 100 Q60 70 100 100 L100 120 L20 120 Z" fill="currentColor" opacity="0.3"/>
+              </svg>
+              <span class="placeholder-text">Profile Photo</span>
+            </div>
+            <div class="image-overlay" aria-hidden="true"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

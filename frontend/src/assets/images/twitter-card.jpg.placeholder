@@ -1,0 +1,21 @@
+# Twitter Card Image Placeholder
+
+This file represents where the Twitter Card image should be placed.
+
+**File:** twitter-card.jpg
+**Dimensions:** 1200x675 pixels (recommended for summary_large_image)
+**Format:** JPG or PNG
+**Description:** Image used when the portfolio is shared on Twitter
+
+**Content suggestions:**
+- Portfolio screenshot or mockup
+- Professional headshot with portfolio branding
+- Clean design with name and title text overlay
+- Twitter-friendly design aesthetic
+
+**Technical requirements:**
+- File size: Under 5MB (Twitter limit)
+- Aspect ratio: 16:9 (1200x675)
+- Minimum: 300x157 pixels
+- Text should be readable at small sizes
+- High contrast for mobile viewing

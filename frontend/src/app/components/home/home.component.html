@@ -1,0 +1,36 @@
+<div class="home-layout" [class.reduced-motion]="prefersReducedMotion">
+  <!-- Sidebar -->
+  <app-sidebar></app-sidebar>
+  
+  <!-- Main Content -->
+  <main id="main-content" class="main-content" [class.reduced-motion]="prefersReducedMotion" role="main" tabindex="-1">
+    <!-- Hero Section -->
+    <section id="hero" class="content-section" aria-labelledby="hero-heading">
+      <app-hero></app-hero>
+    </section>
+    
+    <!-- About Section -->
+    <section id="about" class="content-section" aria-labelledby="about-heading">
+      <app-about></app-about>
+    </section>
+    
+    <!-- Experience Section -->
+    <section id="experience" class="content-section" aria-labelledby="experience-heading">
+      <app-section-heading number="02" title="Experience"></app-section-heading>
+      <app-experience></app-experience>
+    </section>
+    
+    <!-- Projects Section -->
+    <section id="projects" class="content-section" aria-labelledby="projects-heading">
+      <app-projects></app-projects>
+    </section>
+    
+    <!-- Contact Section -->
+    <section id="contact" class="content-section" aria-labelledby="contact-heading">
+      <app-contact></app-contact>
+    </section>
+
+    <!-- Footer -->
+    <app-footer></app-footer>
+  </main>
+</div>
