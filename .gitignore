@@ -165,4 +165,4 @@ dmypy.json
 /content/images/projects/*.gif
 /content/images/projects/*.webp
 # Keep the directory but ignore uploaded images
-!/content/images/projects/.gitkeep
+!/content/images/projects/.gitkeep.kiro/specs/portfolio-website
