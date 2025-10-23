@@ -23,6 +23,7 @@
     "format:check": "npm run format:check:frontend && npm run format:check:backend",
     "format:check:frontend": "cd frontend && npm run format:check",
     "format:check:backend": "cd backend && source venv/bin/activate && black --check .",
+    "precommit": "npm run format && npm run lint",
     "prepare": "husky"
   },
   "devDependencies": {
