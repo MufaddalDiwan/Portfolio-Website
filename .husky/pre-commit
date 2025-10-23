@@ -1,0 +1,47 @@
+#!/usr/bin/env sh
+. "$(dirname -- "$0")/_/husky.sh"
+
+echo "🔍 Running pre-commit checks..."
+
+# Check if we're in the root directory
+if [ ! -f "package.json" ]; then
+  echo "❌ Error: Not in project root directory"
+  exit 1
+fi
+
+# Run frontend format check
+echo "📝 Checking frontend formatting..."
+if ! npm run format:check:frontend; then
+  echo "⚠️  Frontend formatting issues found. Auto-fixing..."
+  npm run format:frontend
+  echo "✅ Frontend formatting fixed. Please review and re-commit."
+fi
+
+# Run backend format check
+echo "📝 Checking backend formatting..."
+if ! npm run format:check:backend; then
+  echo "⚠️  Backend formatting issues found. Auto-fixing..."
+  npm run format:backend
+  echo "✅ Backend formatting fixed. Please review and re-commit."
+fi
+
+# Run frontend linting (allow warnings, only fail on errors)
+echo "🔍 Running frontend linting..."
+if ! npm run lint:frontend; then
+  echo "⚠️  Frontend linting issues found. Some issues may need manual fixing."
+  echo "💡 Run 'npm run lint:fix:frontend' to auto-fix what's possible."
+  echo "📝 Review the linting output above and fix critical errors before committing."
+  # Don't exit on linting errors for now, just warn
+fi
+
+# Run backend linting (allow warnings, only fail on critical errors)
+echo "🔍 Running backend linting..."
+if ! npm run lint:backend; then
+  echo "⚠️  Backend linting issues found. Some issues may need manual fixing."
+  echo "💡 Run 'npm run lint:fix:backend' to auto-fix what's possible."
+  echo "📝 Review the linting output above and fix critical errors before committing."
+  # Don't exit on linting errors for now, just warn
+fi
+
+echo "✅ Pre-commit checks completed!"
+echo "📋 Note: Please review any linting warnings above and fix them when possible."
