@@ -122,12 +122,6 @@ npm run build:frontend
 # Deploy backend/ directory
 ```
 
-## Contributing
-
-1. Follow the task-based development workflow in `.kiro/specs/`
-2. Run tests before committing
-3. Follow the established code style
-
 ## License
 
 MIT License - see LICENSE file for details
