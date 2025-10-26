@@ -26,8 +26,12 @@
 }
 
 @keyframes spin {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
 }
 
 /* Error State */
@@ -157,19 +161,19 @@
     transition: opacity 0.3s ease;
     transform: none;
   }
-  
+
   .hero-section.visible .hero-content {
     transform: none;
   }
-  
+
   .cta-button:hover {
     transform: none;
   }
-  
+
   .cta-button:hover .cta-icon {
     transform: none;
   }
-  
+
   .loading-spinner {
     animation: none;
     border-top-color: var(--color-accent);
@@ -182,13 +186,13 @@
     min-height: 80vh;
     padding: var(--spacing-xl) var(--spacing-md);
   }
-  
+
   .hero-actions {
     flex-direction: column;
     align-items: center;
     gap: var(--spacing-md);
   }
-  
+
   .cta-button {
     width: 100%;
     max-width: 280px;
@@ -200,11 +204,11 @@
   .hero-section {
     padding: var(--spacing-lg) var(--spacing-sm);
   }
-  
+
   .hero-title {
     margin-bottom: var(--spacing-md);
   }
-  
+
   .hero-subtitle {
     margin-bottom: var(--spacing-xl);
   }

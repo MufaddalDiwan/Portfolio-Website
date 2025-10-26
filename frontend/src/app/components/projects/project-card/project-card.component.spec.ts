@@ -18,12 +18,12 @@ describe('ProjectCardComponent', () => {
     coverImage: 'test-project.jpg',
     featured: true,
     orderIndex: 1,
-    createdAt: '2023-01-01T00:00:00Z'
+    createdAt: '2023-01-01T00:00:00Z',
   };
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [ProjectCardComponent]
+      imports: [ProjectCardComponent],
     }).compileComponents();
 
     fixture = TestBed.createComponent(ProjectCardComponent);
@@ -38,9 +38,11 @@ describe('ProjectCardComponent', () => {
 
   it('should display project information', () => {
     const compiled = fixture.nativeElement as HTMLElement;
-    
+
     expect(compiled.querySelector('.project-title')?.textContent).toContain('Test Project');
-    expect(compiled.querySelector('.project-description')?.textContent).toContain('Test description');
+    expect(compiled.querySelector('.project-description')?.textContent).toContain(
+      'Test description'
+    );
   });
 
   it('should show featured badge for featured projects', () => {
@@ -51,7 +53,7 @@ describe('ProjectCardComponent', () => {
   it('should not show featured badge for non-featured projects', () => {
     component.project = { ...mockProject, featured: false };
     fixture.detectChanges();
-    
+
     const compiled = fixture.nativeElement as HTMLElement;
     expect(compiled.querySelector('.featured-badge')).toBeFalsy();
   });
@@ -59,7 +61,7 @@ describe('ProjectCardComponent', () => {
   it('should display tech tags', () => {
     const compiled = fixture.nativeElement as HTMLElement;
     const techTags = compiled.querySelectorAll('.tech-tag');
-    
+
     expect(techTags.length).toBe(2);
     expect(techTags[0].textContent?.trim()).toBe('React');
     expect(techTags[1].textContent?.trim()).toBe('TypeScript');
@@ -78,7 +80,7 @@ describe('ProjectCardComponent', () => {
   it('should not show links when URLs are empty', () => {
     component.project = { ...mockProject, githubUrl: '', demoUrl: '' };
     fixture.detectChanges();
-    
+
     const compiled = fixture.nativeElement as HTMLElement;
     expect(compiled.querySelector('.github-link')).toBeFalsy();
     expect(compiled.querySelector('.demo-link')).toBeFalsy();
@@ -106,18 +108,22 @@ describe('ProjectCardComponent', () => {
     spyOn(window, 'open');
     const event = new Event('click');
     spyOn(event, 'stopPropagation');
-    
+
     component.openLink('https://example.com', event);
-    
+
     expect(event.stopPropagation).toHaveBeenCalled();
-    expect(window.open).toHaveBeenCalledWith('https://example.com', '_blank', 'noopener,noreferrer');
+    expect(window.open).toHaveBeenCalledWith(
+      'https://example.com',
+      '_blank',
+      'noopener,noreferrer'
+    );
   });
 
   it('should handle card click', () => {
     spyOn(console, 'log');
-    
+
     component.onCardClick();
-    
+
     expect(console.log).toHaveBeenCalledWith('Project card clicked:', 'test-project');
   });
 });

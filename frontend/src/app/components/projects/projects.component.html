@@ -2,15 +2,16 @@
   <!-- Section Header -->
   <div class="projects-header">
     <app-section-heading number="03" title="Projects"></app-section-heading>
-    
+
     <!-- Filter Toggle -->
     <div class="filter-controls" *ngIf="!loading && !error">
-      <button 
+      <button
         class="filter-toggle"
         (click)="toggleFilter()"
         [attr.aria-pressed]="showFeaturedOnly"
         [attr.aria-label]="getFilterAriaLabel()"
-        type="button">
+        type="button"
+      >
         {{ filterButtonText }}
         <span class="filter-count" aria-hidden="true">
           ({{ showFeaturedOnly ? featuredCount : totalCount }})
@@ -28,26 +29,29 @@
   <!-- Error State -->
   <div *ngIf="error && !loading" class="error-state" role="alert">
     <p>{{ error }}</p>
-    <button 
-      class="retry-button" 
-      (click)="loadProjects()" 
+    <button
+      class="retry-button"
+      (click)="loadProjects()"
       type="button"
-      aria-label="Retry loading projects">
+      aria-label="Retry loading projects"
+    >
       Try Again
     </button>
   </div>
 
   <!-- Projects Grid -->
-  <div 
-    *ngIf="!loading && !error" 
+  <div
+    *ngIf="!loading && !error"
     class="projects-grid"
     role="list"
-    [attr.aria-label]="getProjectsAriaLabel()">
+    [attr.aria-label]="getProjectsAriaLabel()"
+  >
     <app-project-card
       *ngFor="let project of filteredProjects; trackBy: trackByProjectId"
       [project]="project"
       class="project-card-wrapper"
-      role="listitem">
+      role="listitem"
+    >
     </app-project-card>
   </div>
 

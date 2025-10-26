@@ -3,14 +3,17 @@ import { CommonModule, NgOptimizedImage } from '@angular/common';
 import { Project } from '../../../services/api.service';
 import { TechTagComponent } from '../../shared';
 import { ReducedMotionService } from '../../../services/reduced-motion.service';
-import { ImageOptimizationService, OptimizedImage } from '../../../services/image-optimization.service';
+import {
+  ImageOptimizationService,
+  OptimizedImage,
+} from '../../../services/image-optimization.service';
 
 @Component({
   selector: 'app-project-card',
   standalone: true,
   imports: [CommonModule, NgOptimizedImage, TechTagComponent],
   templateUrl: './project-card.component.html',
-  styleUrl: './project-card.component.css'
+  styleUrl: './project-card.component.css',
 })
 export class ProjectCardComponent {
   @Input({ required: true }) project!: Project;
@@ -46,7 +49,10 @@ export class ProjectCardComponent {
    * Get optimized image configuration
    */
   get optimizedImage(): OptimizedImage {
-    return this.imageOptimizationService.getProjectImage(this.project.coverImage, this.project.featured);
+    return this.imageOptimizationService.getProjectImage(
+      this.project.coverImage,
+      this.project.featured
+    );
   }
 
   /**

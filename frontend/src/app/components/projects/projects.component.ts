@@ -10,7 +10,7 @@ import { ReducedMotionService } from '../../services/reduced-motion.service';
   standalone: true,
   imports: [CommonModule, ProjectCardComponent, SectionHeadingComponent],
   templateUrl: './projects.component.html',
-  styleUrl: './projects.component.css'
+  styleUrl: './projects.component.css',
 })
 export class ProjectsComponent implements OnInit {
   projects: Project[] = [];
@@ -46,7 +46,7 @@ export class ProjectsComponent implements OnInit {
         this.error = error.message;
         this.loading = false;
         console.error('Failed to load projects:', error);
-      }
+      },
     });
   }
 
@@ -57,7 +57,7 @@ export class ProjectsComponent implements OnInit {
 
   private applyFilter(): void {
     if (this.showFeaturedOnly) {
-      this.filteredProjects = this.projects.filter(project => project.featured);
+      this.filteredProjects = this.projects.filter((project) => project.featured);
     } else {
       this.filteredProjects = [...this.projects];
     }
@@ -68,7 +68,7 @@ export class ProjectsComponent implements OnInit {
   }
 
   get featuredCount(): number {
-    return this.projects.filter(project => project.featured).length;
+    return this.projects.filter((project) => project.featured).length;
   }
 
   get totalCount(): number {

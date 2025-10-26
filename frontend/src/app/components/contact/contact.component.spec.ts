@@ -15,9 +15,7 @@ describe('ContactComponent', () => {
 
     await TestBed.configureTestingModule({
       imports: [ContactComponent, ReactiveFormsModule],
-      providers: [
-        { provide: ApiService, useValue: apiServiceSpy }
-      ]
+      providers: [{ provide: ApiService, useValue: apiServiceSpy }],
     }).compileComponents();
 
     fixture = TestBed.createComponent(ContactComponent);
@@ -57,7 +55,7 @@ describe('ContactComponent', () => {
 
   it('should disable submit button when form is invalid', () => {
     expect(component.contactForm.invalid).toBeTruthy();
-    
+
     const compiled = fixture.nativeElement as HTMLElement;
     const submitButton = compiled.querySelector('.submit-button') as HTMLButtonElement;
     expect(submitButton.disabled).toBeTruthy();
@@ -67,12 +65,12 @@ describe('ContactComponent', () => {
     component.contactForm.patchValue({
       name: 'John Doe',
       email: 'john@example.com',
-      message: 'This is a test message that is long enough to pass validation.'
+      message: 'This is a test message that is long enough to pass validation.',
     });
     fixture.detectChanges();
 
     expect(component.contactForm.valid).toBeTruthy();
-    
+
     const compiled = fixture.nativeElement as HTMLElement;
     const submitButton = compiled.querySelector('.submit-button') as HTMLButtonElement;
     expect(submitButton.disabled).toBeFalsy();
@@ -80,11 +78,11 @@ describe('ContactComponent', () => {
 
   it('should submit form successfully', () => {
     mockApiService.submitContact.and.returnValue(of(undefined));
-    
+
     component.contactForm.patchValue({
       name: 'John Doe',
       email: 'john@example.com',
-      message: 'This is a test message that is long enough to pass validation.'
+      message: 'This is a test message that is long enough to pass validation.',
     });
 
     component.onSubmit();
@@ -92,7 +90,7 @@ describe('ContactComponent', () => {
     expect(mockApiService.submitContact).toHaveBeenCalledWith({
       name: 'John Doe',
       email: 'john@example.com',
-      message: 'This is a test message that is long enough to pass validation.'
+      message: 'This is a test message that is long enough to pass validation.',
     });
     expect(component.submitSuccess).toBeTruthy();
     expect(component.submitError).toBe('');
@@ -101,42 +99,46 @@ describe('ContactComponent', () => {
   it('should handle rate limit error', () => {
     const error = new Error('Too many requests. Please try again later.');
     mockApiService.submitContact.and.returnValue(throwError(() => error));
-    
+
     component.contactForm.patchValue({
       name: 'John Doe',
       email: 'john@example.com',
-      message: 'This is a test message that is long enough to pass validation.'
+      message: 'This is a test message that is long enough to pass validation.',
     });
 
     component.onSubmit();
 
     expect(component.submitSuccess).toBeFalsy();
-    expect(component.submitError).toBe('You have reached the rate limit. Please wait before sending another message.');
+    expect(component.submitError).toBe(
+      'You have reached the rate limit. Please wait before sending another message.'
+    );
   });
 
   it('should handle server error', () => {
     const error = new Error('Server error. Please try again later.');
     mockApiService.submitContact.and.returnValue(throwError(() => error));
-    
+
     component.contactForm.patchValue({
       name: 'John Doe',
       email: 'john@example.com',
-      message: 'This is a test message that is long enough to pass validation.'
+      message: 'This is a test message that is long enough to pass validation.',
     });
 
     component.onSubmit();
 
     expect(component.submitSuccess).toBeFalsy();
-    expect(component.submitError).toBe('We are experiencing technical difficulties. Please try again later.');
+    expect(component.submitError).toBe(
+      'We are experiencing technical difficulties. Please try again later.'
+    );
   });
 
   it('should clear form after successful submission', () => {
     mockApiService.submitContact.and.returnValue(of(undefined));
-    
+
     component.contactForm.patchValue({
       name: 'John Doe',
       email: 'john@example.com',
-      message: 'This is a test message that is long enough to pass validation.'
+      message: 'This is a test message that is long enough to pass validation.',
     });
 
     component.onSubmit();

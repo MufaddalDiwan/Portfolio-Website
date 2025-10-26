@@ -19,8 +19,8 @@ describe('ExperienceComponent', () => {
       endDate: null,
       bullets: ['Test bullet 1', 'Test bullet 2'],
       tech: ['React', 'TypeScript'],
-      orderIndex: 1
-    }
+      orderIndex: 1,
+    },
   ];
 
   beforeEach(async () => {
@@ -28,9 +28,7 @@ describe('ExperienceComponent', () => {
 
     await TestBed.configureTestingModule({
       imports: [ExperienceComponent, HttpClientTestingModule],
-      providers: [
-        { provide: ApiService, useValue: apiServiceSpy }
-      ]
+      providers: [{ provide: ApiService, useValue: apiServiceSpy }],
     }).compileComponents();
 
     fixture = TestBed.createComponent(ExperienceComponent);
@@ -44,9 +42,9 @@ describe('ExperienceComponent', () => {
 
   it('should load experience data on init', () => {
     apiService.getExperience.and.returnValue(of(mockExperiences));
-    
+
     component.ngOnInit();
-    
+
     expect(apiService.getExperience).toHaveBeenCalled();
     expect(component.loading).toBeFalse();
   });
@@ -68,10 +66,10 @@ describe('ExperienceComponent', () => {
 
   it('should toggle expanded state', () => {
     expect(component.isExpanded(1)).toBeFalse();
-    
+
     component.toggleExpanded(1);
     expect(component.isExpanded(1)).toBeTrue();
-    
+
     component.toggleExpanded(1);
     expect(component.isExpanded(1)).toBeFalse();
   });

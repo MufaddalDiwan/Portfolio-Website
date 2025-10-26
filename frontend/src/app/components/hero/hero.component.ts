@@ -10,17 +10,17 @@ import { ReducedMotionService } from '../../services/reduced-motion.service';
   standalone: true,
   imports: [CommonModule],
   templateUrl: './hero.component.html',
-  styleUrl: './hero.component.css'
+  styleUrl: './hero.component.css',
 })
 export class HeroComponent implements OnInit, OnDestroy {
   @ViewChild('heroSection', { static: true }) heroSection!: ElementRef<HTMLElement>;
-  
+
   siteMeta: SiteMeta | null = null;
   isLoading = true;
   error: string | null = null;
   isVisible = false;
   prefersReducedMotion = false;
-  
+
   private destroy$ = new Subject<void>();
   private observer?: IntersectionObserver;
 
@@ -33,14 +33,14 @@ export class HeroComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     // Get reduced motion preference
     this.prefersReducedMotion = this.reducedMotionService.prefersReducedMotion;
-    
+
     // If reduced motion is preferred, show immediately without animation
     if (this.prefersReducedMotion) {
       this.isVisible = true;
     }
 
     this.loadSiteMeta();
-    
+
     // Only set up intersection observer if animations are enabled
     if (!this.prefersReducedMotion) {
       this.setupIntersectionObserver();
@@ -54,7 +54,8 @@ export class HeroComponent implements OnInit, OnDestroy {
   }
 
   loadSiteMeta(): void {
-    this.apiService.getMeta()
+    this.apiService
+      .getMeta()
       .pipe(takeUntil(this.destroy$))
       .subscribe({
         next: (meta) => {
@@ -65,18 +66,18 @@ export class HeroComponent implements OnInit, OnDestroy {
           console.error('Failed to load site metadata:', error);
           this.error = 'Failed to load content. Please try again later.';
           this.isLoading = false;
-        }
+        },
       });
   }
 
   private setupIntersectionObserver(): void {
     const options = {
       threshold: 0.1,
-      rootMargin: '0px 0px -10% 0px'
+      rootMargin: '0px 0px -10% 0px',
     };
 
     this.observer = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
+      entries.forEach((entry) => {
         if (entry.isIntersecting) {
           this.isVisible = true;
         }

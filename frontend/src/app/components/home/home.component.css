@@ -28,8 +28,6 @@
   margin-bottom: 2rem;
 }
 
-
-
 .content-section p {
   color: var(--text-secondary);
   line-height: 1.6;
@@ -42,16 +40,16 @@
   .home-layout {
     flex-direction: column;
   }
-  
+
   .main-content {
     padding: 0;
   }
-  
+
   .content-section {
     min-height: 80vh;
     padding: 1rem 0;
   }
-  
+
   .content-section h2 {
     font-size: 1.5rem;
   }

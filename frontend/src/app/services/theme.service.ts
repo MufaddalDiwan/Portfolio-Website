@@ -4,7 +4,7 @@ import { BehaviorSubject, Observable } from 'rxjs';
 export type Theme = 'dark' | 'light';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class ThemeService {
   private readonly storageKey = 'portfolio-theme';
@@ -97,13 +97,13 @@ export class ThemeService {
   private applyTheme(theme: Theme): void {
     if (typeof document !== 'undefined') {
       const root = document.documentElement;
-      
+
       // Remove existing theme classes
       root.classList.remove('dark', 'light');
-      
+
       // Add new theme class
       root.classList.add(theme);
-      
+
       // Update data attribute for CSS targeting
       root.setAttribute('data-theme', theme);
     }
@@ -115,7 +115,7 @@ export class ThemeService {
   private listenToSystemChanges(): void {
     if (typeof window !== 'undefined' && window.matchMedia) {
       const mediaQuery = window.matchMedia('(prefers-color-scheme: light)');
-      
+
       mediaQuery.addEventListener('change', (e) => {
         // Only update if no theme is saved (user hasn't made explicit choice)
         if (!this.getSavedTheme()) {

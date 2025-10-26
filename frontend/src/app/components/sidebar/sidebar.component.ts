@@ -1,11 +1,23 @@
-import { Component, OnInit, OnDestroy, signal, computed, HostListener, ElementRef, ViewChild } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  OnDestroy,
+  signal,
+  computed,
+  HostListener,
+  ElementRef,
+  ViewChild,
+} from '@angular/core';
 import { CommonModule, NgOptimizedImage } from '@angular/common';
 import { Subject, takeUntil } from 'rxjs';
 import { ApiService, SiteMeta } from '../../services/api.service';
 import { ScrollSpyService } from '../../services/scroll-spy.service';
 import { ThemeService, Theme } from '../../services/theme.service';
 import { ReducedMotionService } from '../../services/reduced-motion.service';
-import { ImageOptimizationService, OptimizedImage } from '../../services/image-optimization.service';
+import {
+  ImageOptimizationService,
+  OptimizedImage,
+} from '../../services/image-optimization.service';
 
 export interface NavItem {
   label: string;
@@ -18,31 +30,32 @@ export interface NavItem {
   standalone: true,
   imports: [CommonModule, NgOptimizedImage],
   templateUrl: './sidebar.component.html',
-  styleUrl: './sidebar.component.css'
+  styleUrl: './sidebar.component.css',
 })
 export class SidebarComponent implements OnInit, OnDestroy {
   private readonly destroy$ = new Subject<void>();
-  
+
   // ViewChild for mobile menu focus management
   @ViewChild('mobileMenuOverlay', { static: false }) mobileMenuOverlay?: ElementRef<HTMLElement>;
-  @ViewChild('mobileMenuToggle', { static: false }) mobileMenuToggle?: ElementRef<HTMLButtonElement>;
-  
+  @ViewChild('mobileMenuToggle', { static: false })
+  mobileMenuToggle?: ElementRef<HTMLButtonElement>;
+
   // Signals for reactive state management
   protected readonly siteMeta = signal<SiteMeta | null>(null);
   protected readonly activeSection = signal<string>('');
   protected readonly isLoading = signal<boolean>(true);
   protected readonly error = signal<string | null>(null);
-  
+
   // Mobile menu state
   protected readonly isMobileMenuOpen = signal<boolean>(false);
   protected readonly isMobile = signal<boolean>(false);
-  
+
   // Theme state
   protected readonly currentTheme = signal<Theme>('dark');
-  
+
   // Reduced motion state
   protected readonly prefersReducedMotion = signal<boolean>(false);
-  
+
   // Avatar image state
   protected readonly avatarImageError = signal<boolean>(false);
 
@@ -51,15 +64,15 @@ export class SidebarComponent implements OnInit, OnDestroy {
     { label: 'About', anchor: 'about', active: false },
     { label: 'Experience', anchor: 'experience', active: false },
     { label: 'Projects', anchor: 'projects', active: false },
-    { label: 'Contact', anchor: 'contact', active: false }
+    { label: 'Contact', anchor: 'contact', active: false },
   ]);
 
   // Computed properties
   protected readonly updatedNavItems = computed(() => {
     const currentActive = this.activeSection();
-    return this.navItems().map(item => ({
+    return this.navItems().map((item) => ({
       ...item,
-      active: item.anchor === currentActive
+      active: item.anchor === currentActive,
     }));
   });
 
@@ -93,7 +106,8 @@ export class SidebarComponent implements OnInit, OnDestroy {
     this.isLoading.set(true);
     this.error.set(null);
 
-    this.apiService.getMeta()
+    this.apiService
+      .getMeta()
       .pipe(takeUntil(this.destroy$))
       .subscribe({
         next: (meta) => {
@@ -104,7 +118,7 @@ export class SidebarComponent implements OnInit, OnDestroy {
           console.error('Failed to load site metadata:', error);
           this.error.set('Failed to load profile information');
           this.isLoading.set(false);
-        }
+        },
       });
   }
 
@@ -112,15 +126,15 @@ export class SidebarComponent implements OnInit, OnDestroy {
    * Initialize scroll spy functionality
    */
   private initializeScrollSpy(): void {
-    const sectionIds = this.navItems().map(item => item.anchor);
-    
+    const sectionIds = this.navItems().map((item) => item.anchor);
+
     // Start observing sections
     this.scrollSpyService.observeSections(sectionIds);
-    
+
     // Subscribe to active section changes
     this.scrollSpyService.activeSection$
       .pipe(takeUntil(this.destroy$))
-      .subscribe(activeSection => {
+      .subscribe((activeSection) => {
         this.activeSection.set(activeSection);
       });
   }
@@ -130,11 +144,9 @@ export class SidebarComponent implements OnInit, OnDestroy {
    */
   private initializeTheme(): void {
     // Subscribe to theme changes
-    this.themeService.currentTheme$
-      .pipe(takeUntil(this.destroy$))
-      .subscribe(theme => {
-        this.currentTheme.set(theme);
-      });
+    this.themeService.currentTheme$.pipe(takeUntil(this.destroy$)).subscribe((theme) => {
+      this.currentTheme.set(theme);
+    });
   }
 
   /**
@@ -144,7 +156,7 @@ export class SidebarComponent implements OnInit, OnDestroy {
     // Subscribe to reduced motion preference changes
     this.reducedMotionService.prefersReducedMotion$
       .pipe(takeUntil(this.destroy$))
-      .subscribe(prefersReducedMotion => {
+      .subscribe((prefersReducedMotion) => {
         this.prefersReducedMotion.set(prefersReducedMotion);
       });
   }
@@ -155,7 +167,7 @@ export class SidebarComponent implements OnInit, OnDestroy {
   protected onNavItemClick(anchor: string, event: Event): void {
     event.preventDefault();
     this.scrollSpyService.scrollToSection(anchor);
-    
+
     // Close mobile menu after navigation
     if (this.isMobile() && this.isMobileMenuOpen()) {
       this.closeMobileMenu();
@@ -234,7 +246,7 @@ export class SidebarComponent implements OnInit, OnDestroy {
   private checkMobileBreakpoint(): void {
     const isMobile = window.innerWidth < 768;
     this.isMobile.set(isMobile);
-    
+
     // Close mobile menu if switching to desktop
     if (!isMobile && this.isMobileMenuOpen()) {
       this.closeMobileMenu();
@@ -272,7 +284,7 @@ export class SidebarComponent implements OnInit, OnDestroy {
 
     const target = event.target as HTMLElement;
     const sidebar = this.elementRef.nativeElement;
-    
+
     // Close menu if click is outside sidebar
     if (!sidebar.contains(target)) {
       this.closeMobileMenu();
@@ -295,14 +307,16 @@ export class SidebarComponent implements OnInit, OnDestroy {
    */
   private openMobileMenu(): void {
     this.isMobileMenuOpen.set(true);
-    
+
     // Prevent body scroll
     document.body.style.overflow = 'hidden';
-    
+
     // Focus trap - focus first nav item after animation (or immediately if reduced motion)
     const delay = this.prefersReducedMotion() ? 0 : 150;
     setTimeout(() => {
-      const firstNavLink = this.mobileMenuOverlay?.nativeElement.querySelector('.nav-link') as HTMLElement;
+      const firstNavLink = this.mobileMenuOverlay?.nativeElement.querySelector(
+        '.nav-link'
+      ) as HTMLElement;
       firstNavLink?.focus();
     }, delay);
   }
@@ -312,10 +326,10 @@ export class SidebarComponent implements OnInit, OnDestroy {
    */
   private closeMobileMenu(): void {
     this.isMobileMenuOpen.set(false);
-    
+
     // Restore body scroll
     document.body.style.overflow = '';
-    
+
     // Return focus to toggle button (immediately if reduced motion)
     const delay = this.prefersReducedMotion() ? 0 : 150;
     setTimeout(() => {
@@ -342,7 +356,7 @@ export class SidebarComponent implements OnInit, OnDestroy {
    */
   protected onMobileMenuKeydown(event: Event): void {
     const keyboardEvent = event as KeyboardEvent;
-    
+
     if (!this.isMobileMenuOpen() || !this.mobileMenuOverlay) {
       return;
     }

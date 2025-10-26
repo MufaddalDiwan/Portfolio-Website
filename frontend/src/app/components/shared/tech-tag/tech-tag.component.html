@@ -1,10 +1,11 @@
-<span 
+<span
   [class]="tagClasses"
   [attr.aria-label]="ariaAttributes['aria-label']"
   [attr.role]="ariaAttributes['role']"
   [attr.tabindex]="ariaAttributes['tabindex']"
   (click)="onTagClick()"
   (keydown.enter)="onTagClick()"
-  (keydown.space)="onTagClick()">
+  (keydown.space)="onTagClick()"
+>
   {{ tech }}
 </span>

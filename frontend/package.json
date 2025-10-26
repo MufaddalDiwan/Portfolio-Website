@@ -7,23 +7,18 @@
     "serve": "ng serve --host 0.0.0.0 --port 4200",
     "build": "ng build",
     "build:prod": "ng build --configuration production",
+    "build:deploy": "node scripts/build-with-env.js && ng build --configuration production",
+    "build:analyze": "ng build --configuration production --stats-json && npx webpack-bundle-analyzer dist/portfolio/browser/stats.json",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
     "test:run": "ng test --watch=false --browsers=ChromeHeadless",
     "lint": "ng lint",
-    "e2e": "ng e2e"
-  },
-  "prettier": {
-    "printWidth": 100,
-    "singleQuote": true,
-    "overrides": [
-      {
-        "files": "*.html",
-        "options": {
-          "parser": "angular"
-        }
-      }
-    ]
+    "lint:fix": "ng lint --fix",
+    "format": "prettier --write \"src/**/*.{ts,html,css,scss,json}\"",
+    "format:check": "prettier --check \"src/**/*.{ts,html,css,scss,json}\"",
+    "e2e": "ng e2e",
+    "preview": "ng build --configuration production && npx http-server dist/portfolio/browser -p 8080 -c-1",
+    "lighthouse": "ng build --configuration production && npx lighthouse http://localhost:8080 --output html --output-path ./lighthouse-report.html"
   },
   "private": true,
   "dependencies": {
@@ -57,6 +52,7 @@
     "karma-jasmine": "~5.1.0",
     "karma-jasmine-html-reporter": "~2.1.0",
     "postcss": "^8.5.6",
+    "prettier": "^3.6.2",
     "tailwindcss": "^3.4.18",
     "typescript": "~5.9.2",
     "typescript-eslint": "8.46.0"

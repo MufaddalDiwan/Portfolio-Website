@@ -11,17 +11,17 @@ import { TechTagComponent } from '../shared';
   standalone: true,
   imports: [CommonModule, TechTagComponent],
   templateUrl: './experience.component.html',
-  styleUrl: './experience.component.css'
+  styleUrl: './experience.component.css',
 })
 export class ExperienceComponent implements OnInit {
   private apiService = inject(ApiService);
   private reducedMotionService = inject(ReducedMotionService);
-  
+
   experiences$: Observable<Experience[]> = of([]);
   expandedItems = new Set<number>();
   loading = true;
   error: string | null = null;
-  
+
   get prefersReducedMotion(): boolean {
     return this.reducedMotionService.prefersReducedMotion;
   }
@@ -33,9 +33,9 @@ export class ExperienceComponent implements OnInit {
   private loadExperience(): void {
     this.loading = true;
     this.error = null;
-    
+
     this.experiences$ = this.apiService.getExperience().pipe(
-      catchError(error => {
+      catchError((error) => {
         this.error = error.message || 'Failed to load experience data';
         this.loading = false;
         return of([]);
@@ -72,9 +72,9 @@ export class ExperienceComponent implements OnInit {
     // Parse date string as YYYY-MM-DD and create date in UTC to avoid timezone issues
     const [startYear, startMonth] = startDate.split('-').map(Number);
     const start = new Date(startYear, startMonth - 1); // Month is 0-indexed
-    const startFormatted = start.toLocaleDateString('en-US', { 
-      month: 'short', 
-      year: 'numeric' 
+    const startFormatted = start.toLocaleDateString('en-US', {
+      month: 'short',
+      year: 'numeric',
     });
 
     if (!endDate) {
@@ -83,9 +83,9 @@ export class ExperienceComponent implements OnInit {
 
     const [endYear, endMonth] = endDate.split('-').map(Number);
     const end = new Date(endYear, endMonth - 1); // Month is 0-indexed
-    const endFormatted = end.toLocaleDateString('en-US', { 
-      month: 'short', 
-      year: 'numeric' 
+    const endFormatted = end.toLocaleDateString('en-US', {
+      month: 'short',
+      year: 'numeric',
     });
 
     return `${startFormatted} - ${endFormatted}`;
@@ -98,7 +98,7 @@ export class ExperienceComponent implements OnInit {
     // Parse date string as YYYY-MM-DD and create date in UTC to avoid timezone issues
     const [startYear, startMonth] = startDate.split('-').map(Number);
     const start = new Date(startYear, startMonth - 1); // Month is 0-indexed
-    
+
     let end: Date;
     if (endDate) {
       const [endYear, endMonth] = endDate.split('-').map(Number);
@@ -106,22 +106,22 @@ export class ExperienceComponent implements OnInit {
     } else {
       end = new Date();
     }
-    
-    const diffInMonths = (end.getFullYear() - start.getFullYear()) * 12 + 
-                        (end.getMonth() - start.getMonth());
-    
+
+    const diffInMonths =
+      (end.getFullYear() - start.getFullYear()) * 12 + (end.getMonth() - start.getMonth());
+
     if (diffInMonths < 12) {
       return diffInMonths === 1 ? '1 month' : `${diffInMonths} months`;
     }
-    
+
     const years = Math.floor(diffInMonths / 12);
     const months = diffInMonths % 12;
-    
+
     let duration = years === 1 ? '1 year' : `${years} years`;
     if (months > 0) {
       duration += months === 1 ? ' 1 month' : ` ${months} months`;
     }
-    
+
     return duration;
   }
 

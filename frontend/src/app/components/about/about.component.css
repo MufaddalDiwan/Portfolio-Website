@@ -67,8 +67,12 @@
 }
 
 @keyframes spin {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
 }
 
 /* Error State */
@@ -240,11 +244,7 @@
   left: 0;
   right: 0;
   bottom: 0;
-  background: linear-gradient(
-    135deg,
-    rgba(14, 165, 233, 0.1) 0%,
-    rgba(14, 165, 233, 0.05) 100%
-  );
+  background: linear-gradient(135deg, rgba(14, 165, 233, 0.1) 0%, rgba(14, 165, 233, 0.05) 100%);
   opacity: 0;
   transition: opacity var(--transition-normal);
 }
@@ -260,20 +260,20 @@
     transition: opacity 0.3s ease;
     transform: none;
   }
-  
+
   .about-section.visible .section-header,
   .about-section.visible .about-content {
     transform: none;
   }
-  
+
   .image-container:hover {
     transform: none;
   }
-  
+
   .image-container:hover .profile-image {
     transform: none;
   }
-  
+
   .loading-spinner {
     animation: none;
     border-top-color: var(--color-accent);
@@ -312,7 +312,7 @@
   .about-grid {
     gap: var(--spacing-xl);
   }
-  
+
   .image-container {
     width: 250px;
     height: 250px;
@@ -324,35 +324,35 @@
   .about-container {
     padding: 0 var(--spacing-md);
   }
-  
+
   .section-header {
     margin-bottom: var(--spacing-xl);
   }
-  
+
   .section-line {
     display: none;
   }
-  
+
   .about-grid {
     grid-template-columns: 1fr;
     gap: var(--spacing-xl);
     text-align: center;
   }
-  
+
   .about-text {
     order: 2;
   }
-  
+
   .about-image {
     order: 1;
     justify-self: center;
   }
-  
+
   .image-container {
     width: 200px;
     height: 200px;
   }
-  
+
   .bio-content {
     text-align: left;
   }
@@ -362,21 +362,21 @@
   .about-section {
     padding: var(--spacing-xl) 0;
   }
-  
+
   .about-container {
     padding: 0 var(--spacing-sm);
   }
-  
+
   .section-header {
     flex-direction: column;
     align-items: flex-start;
     gap: var(--spacing-sm);
   }
-  
+
   .section-number {
     min-width: auto;
   }
-  
+
   .image-container {
     width: 180px;
     height: 180px;

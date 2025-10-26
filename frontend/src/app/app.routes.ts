@@ -6,7 +6,7 @@ export const routes: Routes = [
   {
     path: '',
     component: HomeComponent,
-    title: 'Portfolio - Full Stack Developer'
+    title: 'Portfolio - Full Stack Developer',
   },
   // Future admin routes can be added here with guards:
   // {
@@ -17,6 +17,6 @@ export const routes: Routes = [
   // },
   {
     path: '**',
-    redirectTo: ''
-  }
+    redirectTo: '',
+  },
 ];

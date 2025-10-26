@@ -8,7 +8,7 @@ export interface ScrollSpyOptions {
 }
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class ScrollSpyService {
   private readonly activeSectionSubject = new BehaviorSubject<string>('');
@@ -16,7 +16,7 @@ export class ScrollSpyService {
   private sections: string[] = [];
   private readonly defaultOptions: ScrollSpyOptions = {
     threshold: 0.3,
-    rootMargin: '-20% 0px -70% 0px'
+    rootMargin: '-20% 0px -70% 0px',
   };
 
   constructor(private router: Router) {}
@@ -48,17 +48,14 @@ export class ScrollSpyService {
     }
 
     const config = { ...this.defaultOptions, ...options };
-    
-    this.observer = new IntersectionObserver(
-      (entries) => this.handleIntersection(entries),
-      {
-        threshold: config.threshold,
-        rootMargin: config.rootMargin
-      }
-    );
+
+    this.observer = new IntersectionObserver((entries) => this.handleIntersection(entries), {
+      threshold: config.threshold,
+      rootMargin: config.rootMargin,
+    });
 
     // Observe all sections
-    sectionIds.forEach(sectionId => {
+    sectionIds.forEach((sectionId) => {
       const element = document.getElementById(sectionId);
       if (element && this.observer) {
         this.observer.observe(element);
@@ -77,9 +74,9 @@ export class ScrollSpyService {
     if (element) {
       element.scrollIntoView({
         behavior: 'smooth',
-        block: 'start'
+        block: 'start',
       });
-      
+
       // Update hash in URL without triggering navigation
       this.updateHash(sectionId);
     }
@@ -101,15 +98,15 @@ export class ScrollSpyService {
   private handleIntersection(entries: IntersectionObserverEntry[]): void {
     const visibleSections: { id: string; ratio: number; top: number }[] = [];
 
-    entries.forEach(entry => {
+    entries.forEach((entry) => {
       if (entry.isIntersecting) {
         const sectionId = entry.target.id;
         const rect = entry.boundingClientRect;
-        
+
         visibleSections.push({
           id: sectionId,
           ratio: entry.intersectionRatio,
-          top: rect.top
+          top: rect.top,
         });
       }
     });
@@ -124,7 +121,7 @@ export class ScrollSpyService {
       });
 
       const newActiveSection = visibleSections[0].id;
-      
+
       if (newActiveSection !== this.activeSection) {
         this.activeSectionSubject.next(newActiveSection);
         this.updateHash(newActiveSection);
@@ -137,7 +134,7 @@ export class ScrollSpyService {
    */
   private setInitialActiveSection(): void {
     const hash = window.location.hash.replace('#', '');
-    
+
     if (hash && this.sections.includes(hash)) {
       this.activeSectionSubject.next(hash);
     } else if (this.sections.length > 0) {
@@ -152,7 +149,7 @@ export class ScrollSpyService {
   private updateHash(sectionId: string): void {
     if (typeof window !== 'undefined') {
       const newUrl = `${window.location.pathname}${window.location.search}#${sectionId}`;
-      
+
       // Use replaceState to update URL without adding to history
       window.history.replaceState(null, '', newUrl);
     }
@@ -174,7 +171,7 @@ export class ScrollSpyService {
 
     const rect = element.getBoundingClientRect();
     const windowHeight = window.innerHeight;
-    
+
     return rect.top < windowHeight && rect.bottom > 0;
   }
 

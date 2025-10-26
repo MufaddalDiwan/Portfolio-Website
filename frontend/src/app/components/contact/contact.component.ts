@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ApiService, ContactForm } from '../../services/api.service';
 import { ReducedMotionService } from '../../services/reduced-motion.service';
+import { LoggingService } from '../../services/logging.service';
 import { SectionHeadingComponent } from '../shared';
 
 @Component({
@@ -10,7 +11,7 @@ import { SectionHeadingComponent } from '../shared';
   standalone: true,
   imports: [CommonModule, ReactiveFormsModule, SectionHeadingComponent],
   templateUrl: './contact.component.html',
-  styleUrls: ['./contact.component.css']
+  styleUrls: ['./contact.component.css'],
 })
 export class ContactComponent implements OnInit {
   contactForm!: FormGroup;
@@ -21,9 +22,10 @@ export class ContactComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private apiService: ApiService,
-    private reducedMotionService: ReducedMotionService
+    private reducedMotionService: ReducedMotionService,
+    private loggingService: LoggingService
   ) {}
-  
+
   get prefersReducedMotion(): boolean {
     return this.reducedMotionService.prefersReducedMotion;
   }
@@ -36,13 +38,19 @@ export class ContactComponent implements OnInit {
     this.contactForm = this.fb.group({
       name: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(200)]],
       email: ['', [Validators.required, Validators.email, Validators.maxLength(200)]],
-      message: ['', [Validators.required, Validators.minLength(10), Validators.maxLength(5000)]]
+      message: ['', [Validators.required, Validators.minLength(10), Validators.maxLength(5000)]],
     });
   }
 
-  get name() { return this.contactForm.get('name'); }
-  get email() { return this.contactForm.get('email'); }
-  get message() { return this.contactForm.get('message'); }
+  get name() {
+    return this.contactForm.get('name');
+  }
+  get email() {
+    return this.contactForm.get('email');
+  }
+  get message() {
+    return this.contactForm.get('message');
+  }
 
   getFieldError(fieldName: string): string {
     const field = this.contactForm.get(fieldName);
@@ -72,7 +80,7 @@ export class ContactComponent implements OnInit {
     const displayNames: Record<string, string> = {
       name: 'Name',
       email: 'Email',
-      message: 'Message'
+      message: 'Message',
     };
     return displayNames[fieldName] || fieldName;
   }
@@ -86,7 +94,7 @@ export class ContactComponent implements OnInit {
       const formData: ContactForm = {
         name: this.contactForm.value.name.trim(),
         email: this.contactForm.value.email.trim(),
-        message: this.contactForm.value.message.trim()
+        message: this.contactForm.value.message.trim(),
       };
 
       this.apiService.submitContact(formData).subscribe({
@@ -95,9 +103,16 @@ export class ContactComponent implements OnInit {
           this.submitError = '';
           this.contactForm.reset();
           this.isSubmitting = false;
-          
+
+          // Log successful submission (without sensitive data)
+          this.loggingService.info('Contact form submitted successfully', {
+            hasName: !!formData.name,
+            hasEmail: !!formData.email,
+            messageLength: formData.message.length,
+          });
+
           // Reset form state to pristine
-          Object.keys(this.contactForm.controls).forEach(key => {
+          Object.keys(this.contactForm.controls).forEach((key) => {
             this.contactForm.get(key)?.setErrors(null);
           });
           this.contactForm.markAsUntouched();
@@ -106,24 +121,34 @@ export class ContactComponent implements OnInit {
         error: (error: Error) => {
           this.isSubmitting = false;
           this.submitSuccess = false;
-          
+
+          // Log error details for debugging
+          this.loggingService.error('Contact form submission failed', {
+            errorMessage: error.message,
+            errorType: error.constructor.name,
+            status: (error as any).status,
+            timestamp: (error as any).timestamp,
+          });
+
           // Handle specific error types
           if (error.message.includes('Too many requests')) {
-            this.submitError = 'You have reached the rate limit. Please wait before sending another message.';
+            this.submitError =
+              'You have reached the rate limit. Please wait before sending another message.';
           } else if (error.message.includes('Invalid request data')) {
             this.submitError = 'Please check your input and try again.';
           } else if (error.message.includes('Server error')) {
-            this.submitError = 'We are experiencing technical difficulties. Please try again later.';
+            this.submitError =
+              'We are experiencing technical difficulties. Please try again later.';
           } else if (error.message.includes('Network error')) {
             this.submitError = 'Please check your internet connection and try again.';
           } else {
             this.submitError = 'An unexpected error occurred. Please try again later.';
           }
-        }
+        },
       });
     } else {
       // Mark all fields as touched to show validation errors
-      Object.keys(this.contactForm.controls).forEach(key => {
+      Object.keys(this.contactForm.controls).forEach((key) => {
         this.contactForm.get(key)?.markAsTouched();
       });
     }

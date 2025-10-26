@@ -8,7 +8,7 @@ import { routes } from './app.routes';
 
 // Mock component for testing
 @Component({
-  template: '<div>Home Component</div>'
+  template: '<div>Home Component</div>',
 })
 class MockHomeComponent {}
 
@@ -46,14 +46,14 @@ describe('App', () => {
   it('should configure routes correctly', () => {
     expect(routes).toBeDefined();
     expect(routes.length).toBeGreaterThan(0);
-    
+
     // Check that home route exists
-    const homeRoute = routes.find(route => route.path === '');
+    const homeRoute = routes.find((route) => route.path === '');
     expect(homeRoute).toBeDefined();
     expect(homeRoute?.title).toBe('Portfolio - Full Stack Developer');
-    
+
     // Check that wildcard route exists
-    const wildcardRoute = routes.find(route => route.path === '**');
+    const wildcardRoute = routes.find((route) => route.path === '**');
     expect(wildcardRoute).toBeDefined();
     expect(wildcardRoute?.redirectTo).toBe('');
   });

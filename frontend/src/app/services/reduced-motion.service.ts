@@ -2,7 +2,7 @@ import { Injectable, OnDestroy } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class ReducedMotionService implements OnDestroy {
   private readonly reducedMotionSubject = new BehaviorSubject<boolean>(false);
@@ -40,7 +40,7 @@ export class ReducedMotionService implements OnDestroy {
     try {
       // Create media query for prefers-reduced-motion
       this.mediaQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
-      
+
       // Set initial value
       this.reducedMotionSubject.next(this.mediaQuery.matches);
 

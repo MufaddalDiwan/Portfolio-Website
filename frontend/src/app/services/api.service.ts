@@ -50,7 +50,7 @@ export interface SiteMeta {
 }
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class ApiService {
   private readonly baseUrl = environment.apiBaseUrl;
@@ -68,87 +68,54 @@ export class ApiService {
       params = params.set('featured', featured.toString());
     }
 
-    return this.http.get<Project[]>(`${this.baseUrl}/projects`, { params })
-      .pipe(
-        catchError(this.handleError.bind(this)),
-        retryWhen(this.retryStrategy.bind(this))
-      );
+    return this.http
+      .get<Project[]>(`${this.baseUrl}/projects`, { params })
+      .pipe(catchError(this.handleError.bind(this)), retryWhen(this.retryStrategy.bind(this)));
   }
 
   /**
    * Get a single project by slug
    */
   getProjectBySlug(slug: string): Observable<Project> {
-    return this.http.get<Project>(`${this.baseUrl}/projects/${slug}`)
-      .pipe(
-        catchError(this.handleError.bind(this)),
-        retryWhen(this.retryStrategy.bind(this))
-      );
+    return this.http
+      .get<Project>(`${this.baseUrl}/projects/${slug}`)
+      .pipe(catchError(this.handleError.bind(this)), retryWhen(this.retryStrategy.bind(this)));
   }
 
   /**
    * Get all experience entries
    */
   getExperience(): Observable<Experience[]> {
-    return this.http.get<Experience[]>(`${this.baseUrl}/experience`)
-      .pipe(
-        catchError(this.handleError.bind(this)),
-        retryWhen(this.retryStrategy.bind(this))
-      );
+    return this.http
+      .get<Experience[]>(`${this.baseUrl}/experience`)
+      .pipe(catchError(this.handleError.bind(this)), retryWhen(this.retryStrategy.bind(this)));
   }
 
   /**
    * Get site metadata
-  */
+   */
   getMeta(): Observable<SiteMeta> {
-    return this.http.get<SiteMeta>(`${this.baseUrl}/meta`)
-      .pipe(
-        catchError(this.handleError.bind(this)),
-        retryWhen(this.retryStrategy.bind(this))
-      );
+    return this.http
+      .get<SiteMeta>(`${this.baseUrl}/meta`)
+      .pipe(catchError(this.handleError.bind(this)), retryWhen(this.retryStrategy.bind(this)));
   }
-  
+
   /**
    * Submit contact form
    */
   submitContact(form: ContactForm): Observable<void> {
-    return this.http.post<void>(`${this.baseUrl}/contact`, form)
-      .pipe(
-        catchError(this.handleError.bind(this))
-      );
+    return this.http
+      .post<void>(`${this.baseUrl}/contact`, form)
+      .pipe(catchError(this.handleError.bind(this)));
   }
 
   /**
-   * Handle HTTP errors with appropriate error messages
+   * Handle HTTP errors - now simplified since interceptor handles detailed logging
    */
-  private handleError(error: HttpErrorResponse): Observable<never> {
-    let errorMessage = 'An unexpected error occurred';
-
-    if (error.error instanceof ErrorEvent) {
-      // Client-side error
-      errorMessage = `Network error: ${error.error.message}`;
-    } else {
-      // Server-side error
-      switch (error.status) {
-        case 400:
-          errorMessage = 'Invalid request data';
-          break;
-        case 404:
-          errorMessage = 'Content not found';
-          break;
-        case 429:
-          errorMessage = 'Too many requests. Please try again later.';
-          break;
-        case 500:
-          errorMessage = 'Server error. Please try again later.';
-          break;
-        default:
-          errorMessage = `Server error: ${error.status}`;
-      }
-    }
-
-    console.error('API Error:', error);
-    return throwError(() => new Error(errorMessage));
+  private handleError(error: any): Observable<never> {
+    // The error interceptor has already processed and logged the error
+    // Just pass it through
+    return throwError(() => error);
   }
 
   /**
@@ -158,14 +125,14 @@ export class ApiService {
     return errors.pipe(
       concatMap((error, index) => {
         // Don't retry client errors (4xx) or if max retries exceeded
-        if (error.status >= 400 && error.status < 500 || index >= this.maxRetries) {
+        if ((error.status >= 400 && error.status < 500) || index >= this.maxRetries) {
           return throwError(() => error);
         }
 
         // Exponential backoff: 1s, 2s, 4s
         const delay = this.retryDelay * Math.pow(2, index);
         console.log(`Retrying API request in ${delay}ms (attempt ${index + 1}/${this.maxRetries})`);
-        
+
         return timer(delay);
       }),
       take(this.maxRetries)

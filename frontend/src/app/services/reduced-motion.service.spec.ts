@@ -12,12 +12,12 @@ describe('ReducedMotionService', () => {
       addEventListener: jasmine.createSpy('addEventListener'),
       removeEventListener: jasmine.createSpy('removeEventListener'),
       addListener: jasmine.createSpy('addListener'),
-      removeListener: jasmine.createSpy('removeListener')
+      removeListener: jasmine.createSpy('removeListener'),
     });
 
     Object.defineProperty(window, 'matchMedia', {
       writable: true,
-      value: mockMatchMedia
+      value: mockMatchMedia,
     });
 
     TestBed.configureTestingModule({});
@@ -43,7 +43,7 @@ describe('ReducedMotionService', () => {
       addEventListener: jasmine.createSpy('addEventListener'),
       removeEventListener: jasmine.createSpy('removeEventListener'),
       addListener: jasmine.createSpy('addListener'),
-      removeListener: jasmine.createSpy('removeListener')
+      removeListener: jasmine.createSpy('removeListener'),
     });
 
     const newService = new ReducedMotionService();
@@ -53,7 +53,7 @@ describe('ReducedMotionService', () => {
   it('should return 0 animation duration when reduced motion is preferred', () => {
     // Mock reduced motion preference
     spyOnProperty(service, 'prefersReducedMotion', 'get').and.returnValue(true);
-    
+
     expect(service.getAnimationDuration(300)).toBe(0);
   });
 
@@ -63,7 +63,7 @@ describe('ReducedMotionService', () => {
 
   it('should return reduced-motion class when reduced motion is preferred', () => {
     spyOnProperty(service, 'prefersReducedMotion', 'get').and.returnValue(true);
-    
+
     expect(service.getReducedMotionClass()).toBe('reduced-motion');
   });
 
@@ -73,7 +73,7 @@ describe('ReducedMotionService', () => {
 
   it('should return true for shouldDisableAnimations when reduced motion is preferred', () => {
     spyOnProperty(service, 'prefersReducedMotion', 'get').and.returnValue(true);
-    
+
     expect(service.shouldDisableAnimations()).toBe(true);
   });
 

@@ -1,4 +1,12 @@
-import { Component, Input, OnInit, ElementRef, ViewChild, AfterViewInit, OnDestroy } from '@angular/core';
+import {
+  Component,
+  Input,
+  OnInit,
+  ElementRef,
+  ViewChild,
+  AfterViewInit,
+  OnDestroy,
+} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ReducedMotionService } from '../../../services/reduced-motion.service';
 
@@ -7,7 +15,7 @@ import { ReducedMotionService } from '../../../services/reduced-motion.service';
   standalone: true,
   imports: [CommonModule],
   templateUrl: './section-heading.component.html',
-  styleUrl: './section-heading.component.css'
+  styleUrl: './section-heading.component.css',
 })
 export class SectionHeadingComponent implements OnInit, AfterViewInit, OnDestroy {
   @Input({ required: true }) number!: string;
@@ -30,7 +38,7 @@ export class SectionHeadingComponent implements OnInit, AfterViewInit, OnDestroy
 
     // Get reduced motion preference
     this.prefersReducedMotion = this.reducedMotionService.prefersReducedMotion;
-    
+
     // If reduced motion is preferred, show immediately without animation
     if (this.prefersReducedMotion) {
       this.isVisible = true;
@@ -65,11 +73,11 @@ export class SectionHeadingComponent implements OnInit, AfterViewInit, OnDestroy
     const options: IntersectionObserverInit = {
       root: null,
       rootMargin: '0px 0px -10% 0px', // Trigger when 10% from bottom of viewport
-      threshold: 0.1
+      threshold: 0.1,
     };
 
     this.observer = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
+      entries.forEach((entry) => {
         if (entry.isIntersecting && !this.isVisible) {
           this.isVisible = true;
           // Once visible, we can stop observing

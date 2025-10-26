@@ -54,7 +54,7 @@
   color: var(--accent-primary);
 }
 
-.filter-toggle[aria-pressed="true"] {
+.filter-toggle[aria-pressed='true'] {
   background: var(--accent-primary);
   border-color: var(--accent-primary);
   color: var(--bg-primary);
@@ -99,8 +99,12 @@
 }
 
 @keyframes spin {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
 }
 
 /* Reduced Motion Support */

@@ -10,15 +10,16 @@
               class="social-link"
               (click)="openSocialLink(link.url, link.platform)"
               [attr.aria-label]="getSocialLabel(link.platform)"
-              [title]="getSocialLabel(link.platform)">
-              <svg 
-                width="20" 
-                height="20" 
-                viewBox="0 0 24 24" 
-                fill="currentColor" 
+              [title]="getSocialLabel(link.platform)"
+            >
+              <svg
+                width="20"
+                height="20"
+                viewBox="0 0 24 24"
+                fill="currentColor"
                 aria-hidden="true"
-                [innerHTML]="getSocialIcon(link.platform)">
-              </svg>
+                [innerHTML]="getSocialIcon(link.platform)"
+              ></svg>
             </button>
           </li>
         </ul>
@@ -27,28 +28,28 @@
 
     <!-- Copyright and Attribution -->
     <div class="footer-text">
-      <p class="copyright">
-        © {{ currentYear }} Portfolio. All rights reserved.
-      </p>
-      
+      <p class="copyright">© {{ currentYear }} Portfolio. All rights reserved.</p>
+
       <p class="attribution">
-        Built with 
+        Built with
         <span class="tech-stack">
-          <a 
-            href="https://angular.io" 
-            target="_blank" 
+          <a
+            href="https://angular.io"
+            target="_blank"
             rel="noopener noreferrer"
             class="tech-link"
-            aria-label="Angular framework website">
+            aria-label="Angular framework website"
+          >
             Angular
           </a>
           <span class="separator" aria-hidden="true">&</span>
-          <a 
-            href="https://flask.palletsprojects.com" 
-            target="_blank" 
+          <a
+            href="https://flask.palletsprojects.com"
+            target="_blank"
             rel="noopener noreferrer"
             class="tech-link"
-            aria-label="Flask framework website">
+            aria-label="Flask framework website"
+          >
             Flask
           </a>
         </span>
@@ -62,16 +63,18 @@
         class="back-to-top"
         (click)="scrollToTop()"
         aria-label="Scroll back to top of page"
-        title="Back to top">
-        <svg 
-          width="16" 
-          height="16" 
-          viewBox="0 0 24 24" 
-          fill="none" 
-          stroke="currentColor" 
-          stroke-width="2" 
-          aria-hidden="true">
-          <path d="m18 15-6-6-6 6"/>
+        title="Back to top"
+      >
+        <svg
+          width="16"
+          height="16"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          aria-hidden="true"
+        >
+          <path d="m18 15-6-6-6 6" />
         </svg>
       </button>
     </div>

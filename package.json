@@ -2,6 +2,58 @@
   "name": "portfolio-website",
   "version": "1.0.0",
   "description": "Personal portfolio website with Angular frontend and Flask backend",
+  "scripts-documentation": {
+    "Development Scripts": {
+      "dev:frontend": "Start Angular development server on port 4200 with hot reload",
+      "dev:backend": "Start Flask development server on port 5001 with debug mode",
+      "dev": "Start both frontend and backend servers concurrently using concurrently package"
+    },
+    "Installation Scripts": {
+      "install:frontend": "Install frontend dependencies using npm in frontend directory",
+      "install:backend": "Install backend dependencies using pip in Python virtual environment",
+      "install:all": "Install all dependencies for both frontend and backend projects"
+    },
+    "Database Scripts": {
+      "db:migrate": "Run Alembic database migrations to upgrade to latest version",
+      "db:migrate:create": "Create new Alembic migration file (usage: npm run db:migrate:create 'migration description')",
+      "db:seed": "Populate database with sample data including projects, experience, and site metadata",
+      "db:reset": "Run migrations and seed data for fresh database setup (development only)"
+    },
+    "Build Scripts": {
+      "build:frontend": "Build Angular application for production with optimizations"
+    },
+    "Code Quality Scripts": {
+      "lint": "Run linting for both frontend (ESLint) and backend (Ruff) code",
+      "lint:frontend": "Run ESLint on Angular TypeScript code with Angular-specific rules",
+      "lint:backend": "Run Ruff linting on Python code with modern Python standards",
+      "lint:fix": "Auto-fix linting issues for both frontend and backend where possible",
+      "lint:fix:frontend": "Auto-fix ESLint issues in frontend TypeScript code",
+      "lint:fix:backend": "Auto-fix Ruff issues in backend Python code",
+      "format": "Format code for both frontend (Prettier) and backend (Black) to consistent style",
+      "format:frontend": "Format frontend TypeScript, HTML, CSS code using Prettier",
+      "format:backend": "Format backend Python code using Black formatter",
+      "format:check": "Check code formatting without making changes (CI/CD friendly)",
+      "format:check:frontend": "Check frontend code formatting compliance with Prettier",
+      "format:check:backend": "Check backend code formatting compliance with Black"
+    },
+    "Git Hooks": {
+      "precommit": "Run formatting and linting before commits (executed by Husky pre-commit hook)",
+      "prepare": "Install Husky git hooks automatically after npm install"
+    },
+    "Usage Examples": {
+      "Quick Start": "npm run install:all && npm run db:reset && npm run dev",
+      "Fresh Database": "npm run db:reset",
+      "Code Quality Check": "npm run format && npm run lint",
+      "Create Migration": "npm run db:migrate:create 'add user table'",
+      "Production Build": "npm run build:frontend"
+    },
+    "Prerequisites": {
+      "Node.js": "Version 18+ required for Angular 17",
+      "Python": "Version 3.11+ required for Flask and modern Python features",
+      "Virtual Environment": "Python venv should be created in backend/venv directory",
+      "Database": "SQLite for development, PostgreSQL for production"
+    }
+  },
   "private": true,
   "scripts": {
     "dev:frontend": "cd frontend && npm run serve",
@@ -11,6 +63,10 @@
     "install:frontend": "cd frontend && npm install",
     "install:backend": "cd backend && source venv/bin/activate && python -m pip install -r requirements.txt",
     "install:all": "npm run install:frontend && npm run install:backend",
+    "db:migrate": "cd backend && source venv/bin/activate && alembic upgrade head",
+    "db:migrate:create": "cd backend && source venv/bin/activate && alembic revision --autogenerate -m",
+    "db:seed": "cd backend && source venv/bin/activate && python seed.py",
+    "db:reset": "npm run db:migrate && npm run db:seed",
     "lint": "npm run lint:frontend && npm run lint:backend",
     "lint:frontend": "cd frontend && npm run lint",
     "lint:backend": "cd backend && source venv/bin/activate && ruff check .",

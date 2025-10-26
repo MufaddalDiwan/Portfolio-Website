@@ -6,7 +6,7 @@ import { CommonModule } from '@angular/common';
   standalone: true,
   imports: [CommonModule],
   templateUrl: './tech-tag.component.html',
-  styleUrl: './tech-tag.component.css'
+  styleUrl: './tech-tag.component.css',
 })
 export class TechTagComponent {
   @Input({ required: true }) tech!: string;
@@ -29,19 +29,19 @@ export class TechTagComponent {
    */
   get tagClasses(): string {
     const classes = ['tech-tag'];
-    
+
     if (this.variant !== 'default') {
       classes.push(`tech-tag--${this.variant}`);
     }
-    
+
     if (this.clickable) {
       classes.push('tech-tag--clickable');
     }
-    
+
     if (this.className) {
       classes.push(this.className);
     }
-    
+
     return classes.join(' ');
   }
 
@@ -50,7 +50,7 @@ export class TechTagComponent {
    */
   get ariaAttributes(): Record<string, string> {
     const attrs: Record<string, string> = {
-      'aria-label': `Technology: ${this.tech}`
+      'aria-label': `Technology: ${this.tech}`,
     };
 
     if (this.clickable) {
